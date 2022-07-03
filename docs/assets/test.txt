@@ -1,0 +1,6 @@
+Error Codes: 
+P0404: Electric Motor Not found 
+P0068: Body in the trunk detected
+P1056: Driving too slow
+P1101: Wheel 1 speed sensor broken
+P1103: Wheel 3 speed sensor broken 

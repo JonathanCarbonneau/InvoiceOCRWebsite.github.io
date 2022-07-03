@@ -1,0 +1,13 @@
+.card {
+    margin: 0 auto;
+    float: none;
+    margin-top:100px;
+    width: 500px;
+}
+button {
+    margin-top: 15px;
+}
+a {
+    text-decoration: none;
+    color: black;
+}

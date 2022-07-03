@@ -1,0 +1,23 @@
+<div class="card text-center" style="width: 100%;" >
+  <img class="card-img-top" src="../../assets/FirmwareUpdate.png" alt="Card image cap">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Update</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Release notes</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">BFT Firmware 1.003</h5>
+    <button type="submit" class="btn btn-primary"
+    (click)="load()">Start Update</button>
+  </div>
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" [ngStyle]="{'width': width}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+      {{progress}}%
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~../node_modules/bootstrap/dist/css/bootstrap.min.css";
+body{
+    background: linear-gradient(
+        rgba(226, 231, 233, 0.466),
+        rgba(51, 56, 77, 0.75)
+    ), url(assets/background.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

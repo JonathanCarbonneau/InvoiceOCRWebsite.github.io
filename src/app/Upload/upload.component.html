@@ -1,0 +1,223 @@
+<div class="card bg-dark text-white" style="width: 100%" >
+  <div class="card-header">
+    <b>{{title}}</b>
+  </div>
+
+  
+  <div class="card-body">
+    <p>Upload file</p>
+    <input class="form-control" type="file" (change)="onChange($event)">
+    <div>{{errorMessage}}</div>
+    <button type="submit" class="btn btn-light" (click)="onUpload()"> Submit </button>
+  </div>
+</div>
+
+<div class="card" style="width: 100%" >
+  <h2 class="card-title">Analysis</h2>
+<div class="card-body">
+<table class="table table-striped" style="height: 90px; margin-left: auto; margin-right: auto;" >
+  <tbody>
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Processing Fee:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.Processing_Fee}}</div>
+        </div>
+      </td>
+    </tr>
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Processing Percent:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.Processing_Percent}}%</div>
+        </div>
+      </td>
+    </tr>
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Effective Rate:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.Effective_Rate}}%</div>
+        </div>
+      </td>
+    </tr>
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Average Ticket:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.Average_Ticket}}</div>
+        </div>
+      </td>
+    </tr>
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Total Fees:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.Total_Fees[0]}}{{data.Total_Fees[1]}}</div>
+        </div>
+      </td>
+    </tr>
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Total Interchange Charges:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.Total_Interchange_Charges[0]}}{{data.Total_Interchange_Charges[1]}}</div>
+        </div>
+      </td>
+    </tr>
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Total Service Charges:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.Total_Service_Charges[0]}}{{data.Total_Service_Charges[1]}}</div>
+        </div>
+      </td>
+    </tr>
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Total Service Charges, Interchange Charges, and Fees:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.Fees[0]}}{{data.Fees[1]}}</div>
+        </div>
+      </td>
+    </tr>
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Amount:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.amount}}</div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+
+
+<div class="card" style="width: 100%">
+  <h2 class="card-title"> Summary By Day</h2>
+  <div class="card-body">
+<table class="table table-striped" matSort (matSortChange)="sortDataSummaryByDay($event)"  matSortActive="Date_Submitted" matSortDirection="asc" matSortDisableClear>
+  <thead>
+    <tr>
+      <th mat-sort-header="Date_Submitted">Date Submitted</th>
+      <th mat-sort-header="Adjustments">Adjustments</th>
+      <th mat-sort-header="Amount_Processed">Amount Processed</th>
+      <th mat-sort-header="Chargebacks_Reversals">Chargebacks Reversals</th>
+      <th mat-sort-header="Fees">Fees</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let day of sortedSummaryByDay">
+      <td>{{ day.Date_Submitted }}</td>
+      <td>{{ day.Adjustments }}</td>
+      <td>{{ day.Amount_Processed }}</td>
+      <td>{{ day.Chargebacks_Reversals }}</td>
+      <td>{{ day.Fees }}</td>
+    </tr>
+  </tbody>
+</table>
+<div>
+  <div style="display: block">
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [type]="barChartType">
+    </canvas>
+  </div>
+</div>
+</div>
+</div>
+<div class="card" style="width: 100%">
+  <h2 class="card-title">Total Account Fees</h2>
+  <div class="card-body">
+<table class="table table-striped" matSort (matSortChange)="sortDataAccountFees($event)"  matSortActive="Amount" matSortDirection="asc" matSortDisableClear>
+  <thead>
+    <tr>
+      <th mat-sort-header="ACCOUNT">Account Fees</th>
+      <th mat-sort-header="Amount">Amount</th>
+      <th mat-sort-header="Type">Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let accountFee of sortedDataAccountFees">
+      <td>{{ accountFee.ACCOUNT }}</td>
+      <td>{{ accountFee.Amount }}</td>
+      <td>{{ accountFee.Type }}</td>
+    </tr>
+  </tbody>
+</table>
+<div style="display: block">
+  <canvas baseChart
+          [data]="pieChartDataAccount"
+          [type]="pieChartType"></canvas>
+</div>
+</div>
+</div>
+<div class="card" style="width: 100%">
+  <div class="card-body">
+<h2>Total Transaction Fees</h2>
+<table class="table table-striped" matSort (matSortChange)="sortDataTransactionFees($event)"  matSortActive="Amount" matSortDirection="asc" matSortDisableClear>
+  <thead>
+    <tr>
+      <th mat-sort-header="TRANSACTION_FEES">Transaction Fee</th>
+      <th mat-sort-header="Amount">Amount</th>
+      <th mat-sort-header="Type">Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let transactionFee of sortedDataTransactionFees">
+      <td>{{ transactionFee.TRANSACTION_FEES }}</td>
+      <td>{{ transactionFee.Amount }}</td>
+      <td>{{ transactionFee.Type }}</td>
+    </tr>
+  </tbody>
+</table>
+<div style="display: block">
+  <canvas baseChart
+          [data]="pieChartData"
+          [type]="pieChartType"></canvas>
+</div>
+</div>
+</div>
+<div class="card" style="width: 100%">
+  <h2 class="card-title">Fees Summary</h2>
+<table class="table table-striped" style="height: 90px; margin-left: auto; margin-right: auto;" >
+  <tbody>
+  
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Total Fees:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.Total_Fees[0]}}{{data.Total_Fees[1]}}</div>
+        </div>
+      </td>
+    </tr>
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Total Interchange Charges:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.Total_Interchange_Charges[0]}}{{data.Total_Interchange_Charges[1]}}</div>
+        </div>
+      </td>
+    </tr>
+    <tr style="height: 18px;">
+      <td style="height: 18px; width: 132.328px;">Total Service Charges:</td>
+      <td style="height: 18px; width: 502.594px;">
+        <div>
+          <div>{{data.Total_Service_Charges[0]}}{{data.Total_Service_Charges[1]}}</div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="display: block">
+  <canvas baseChart
+          [data]="pieChartFees"
+          [type]="pieChartType"></canvas>
+</div>
+</div>
