@@ -8,6 +8,7 @@ import * as CryptoJS from "crypto-js";
     templateUrl: "login.component.html",
     styleUrls: ["../shared/card.css"]
 })
+
 export class LoginComponent {
     userModel = new UserData('')
     title: string = 'Enter Credentials';
@@ -18,6 +19,7 @@ export class LoginComponent {
 
     constructor(private router: Router){
     }
+    
 
     authenticate(): void {
         console.log(this.userModel.primaryAddress);
