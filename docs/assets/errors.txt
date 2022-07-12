@@ -1,6 +1,0 @@
-Timestamp: 17500 | Maitenence: Check Brakes for wear. Brakepads may need replacement
-Timestamp: 18000 | Maitenence: Check Brakes for wear. Brakepads may need replacement
-Timestamp: 18500 | Maitenence: Check Brakes for wear. Brakepads may need replacement
-Timestamp: 19000 | Maitenence: Check Brakes for wear. Brakepads may need replacement
-Timestamp: 19500 | Maitenence: Check Brakes for wear. Brakepads may need replacement
-Timestamp: 20000 | Maitenence: Check Brakes for wear. Brakepads may need replacement
