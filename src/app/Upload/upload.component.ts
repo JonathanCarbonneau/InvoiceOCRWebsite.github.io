@@ -122,7 +122,7 @@ export class UploadComponent implements OnInit {
   }
 //starts the charts populates with new data.
 activateCharts(): void {
-  // the allows the data to be sorted when the row hedder is clicked
+ //populates the charts with data contains gaphics settings
   this.sortedDataTransactionFees.forEach((y) => {
     switch (y.Type) {
       case "Fees":
