@@ -10,6 +10,7 @@ import {LiveAnnouncer} from '@angular/cdk/a11y';
   styleUrls: ["../shared/card.css"],
 })
 export class UploadComponent implements OnInit {
+  //Inital blank data
   data = {
     Adjustments: ["", "0.00"],
     Average_Ticket: "0.00",
@@ -56,10 +57,11 @@ export class UploadComponent implements OnInit {
     invoice_number: "000000000000",
     issuer: [],
   };
-
+  //converts the curency stings to numbers.
   private convertToNumber(amount: string): number {
     return(Number(amount.replace(/[^0-9.-]+/g, "")))
   }
+  //defining all the varables to be used
   sortedDataTransactionFees = this.data.TRANSACTION_FEES.slice();
   sortedDataAccountFees = this.data.TOTAL_ACCOUNT_FEES.slice();
   sortedSummaryByDay = this.data.SUMMARY_BY_DAY.slice();
@@ -82,6 +84,7 @@ export class UploadComponent implements OnInit {
     scaleShowVerticalLines: false,
     responsive: true,
   };
+  //init the charts.
   public barChartLabels = this.dateSubmitted;
   public barChartType: ChartType = "bar";
   public barChartLegend = true;
@@ -103,7 +106,7 @@ export class UploadComponent implements OnInit {
   onChange(event: any) {
     this.file = event.target.files[0];
   }
-
+//reset all the data in the carts upon new upload.
   resetCharts(): void {
     this.dateSubmitted = [];
     this.barChartData = [{ data: [], label: "Series A" }];
@@ -117,7 +120,9 @@ export class UploadComponent implements OnInit {
     this.pieChartDataAccountFees[1] = 0;
     this.pieChartDataAccountFees[2] = 0;
   }
+//starts the charts populates with new data.
 activateCharts(): void {
+  // the allows the data to be sorted when the row hedder is clicked
   this.sortedDataTransactionFees.forEach((y) => {
     switch (y.Type) {
       case "Fees":
@@ -159,7 +164,7 @@ activateCharts(): void {
         break;
     }
   });
-
+//init the data for the piechart.
   this.pieChartData = {
     labels: ["Fees", "Interchange charges", "Service charges"],
     datasets: [
@@ -213,12 +218,15 @@ activateCharts(): void {
   ];
 }
 activateSorting() {
+        //slicing the data for the charts.
         this.sortedDataTransactionFees = this.data.TRANSACTION_FEES.slice();
         this.sortedDataAccountFees = this.data.TOTAL_ACCOUNT_FEES.slice();
         this.sortedSummaryByDay = this.data.SUMMARY_BY_DAY.slice();
+        //filter the string data to be numeric
         this.feeData[0] += Number(-this.data.Total_Fees[1]);
         this.feeData[1] += Number(-this.data.Total_Interchange_Charges[1]);
         this.feeData[2] += Number(-this.data.Total_Service_Charges[1]);
+        //get filter all data to numeric data
         this.sortedSummaryByDay.forEach((y) => {
           if (y.Date_Submitted.match(/^(\d{1,2})\/(\d{1,2})\/(\d{1,2})$/)) {
             this.dateSubmitted.push(y.Date_Submitted);
@@ -234,6 +242,7 @@ activateSorting() {
           }
         });
 }
+ //function is called when the submit button is pressed.
   onUpload() {
     console.log(this.file);
     if(this.file != null){
@@ -241,6 +250,7 @@ activateSorting() {
     }else{
       this.errorMessage = "You have not chosen a file";
     }
+    //writes the data to the chart this is automaticly updated.
     this.fileUploadService.upload(this.file).subscribe({
       next: (data) => {
         this.data = data;
@@ -255,7 +265,9 @@ activateSorting() {
  
   }
 
-
+//the sorting algorithem for sorting the columbs when clicked.
+  
+//sorts TransactionFees data when the chart hedders are clicked 
   sortDataTransactionFees(sort: Sort) {
     const data = this.data.TRANSACTION_FEES.slice();
     if (!sort.active || sort.direction === "") {
@@ -277,7 +289,7 @@ activateSorting() {
       }
     });
   }
-
+//sorts AccountFees data when the chart hedders are clicked 
   sortDataAccountFees(sort: Sort) {
     const data = this.data.TOTAL_ACCOUNT_FEES.slice();
     if (!sort.active || sort.direction === "") {
@@ -299,14 +311,14 @@ activateSorting() {
       }
     });
   }
-
+  //sorts DataSummaryByDay data when the chart hedders are clicked 
   sortDataSummaryByDay(sort: Sort) {
     const data = this.data.SUMMARY_BY_DAY.slice();
     if (!sort.active || sort.direction === "") {
       this.sortedSummaryByDay = data;
       return;
     }
-
+//all stings must be converted hence convert to number.
     this.sortedSummaryByDay = data.sort((a, b) => {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
@@ -330,6 +342,7 @@ activateSorting() {
     });
   }
 }
+//function for comparing.
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
